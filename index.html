@@ -3,20 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>顶呱呱账号分流管理系统（内部版）</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="admin.js" defer></script>
 </head>
 <body>
 
-<!-- 登录校验逻辑：判断登录状态与过期时间 -->
-<script>
-  const isLoggedIn = localStorage.getItem('isLoggedIn');
-  const expiry = localStorage.getItem('expiry');
-  const now = new Date().getTime();
-  if (!isLoggedIn || !expiry || now > parseInt(expiry)) {
-    window.location.href = 'login.html';
-  }
-</script>
 
 <!-- 顶部横幅区域：系统标题与时间 -->
 <header class="banner">
