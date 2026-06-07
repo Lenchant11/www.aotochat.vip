@@ -18,7 +18,7 @@
     var callback = function() { if (url) window.open(url, '_blank'); };
     gtag('event', 'conversion', {
       'send_to': CONVERSION_ID,
-      'value': 2.0,
+      'value': 5.0,
       'currency': 'USD',
       'event_callback': callback
     });
