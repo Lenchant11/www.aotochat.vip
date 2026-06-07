@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html class=" " style="--el-color-primary:#409EFF; --el-color-primary-light-1:#53a7ff; --el-color-primary-light-2:#66b1ff; --el-color-primary-light-3:#79bbff; --el-color-primary-light-4:#8cc4ff; --el-color-primary-light-5:#9fceff; --el-color-primary-light-6:#b2d8ff; --el-color-primary-light-7:#c5e1ff; --el-color-primary-light-8:#d8ebff; --el-color-primary-light-9:#ebf5ff; --el-color-primary-dark-1:#398ee5; --el-color-primary-dark-2:#337ecc; --el-color-primary-dark-3:#2c6eb2; --el-color-primary-dark-4:#265e99; --el-color-primary-dark-5:#204f7f; --el-color-primary-dark-6:#193f66; --el-color-primary-dark-7:#132f4c; --el-color-primary-dark-8:#0c1f32; --el-color-primary-dark-9:#060f19;">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="./aotochat_files/favicon.ico">
+  <title>智聊管理系统</title>
+  <style>
+    html,
+    body,
+    #app {
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .chromeframe {
+      margin: 0.2em 0;
+      background: #ccc;
+      color: #000;
+      padding: 0.2em 0;
+    }
+
+    #loader-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999999;
+    }
+
+    #loader {
+      display: block;
+      position: relative;
+      left: 50%;
+      top: 50%;
+      width: 150px;
+      height: 150px;
+      margin: -75px 0 0 -75px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #FFF;
+      -webkit-animation: spin 2s linear infinite;
+      -ms-animation: spin 2s linear infinite;
+      -moz-animation: spin 2s linear infinite;
+      -o-animation: spin 2s linear infinite;
+      animation: spin 2s linear infinite;
+      z-index: 1001;
+    }
+
+    #loader:before {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #FFF;
+      -webkit-animation: spin 3s linear infinite;
+      -moz-animation: spin 3s linear infinite;
+      -o-animation: spin 3s linear infinite;
+      -ms-animation: spin 3s linear infinite;
+      animation: spin 3s linear infinite;
+    }
+
+    #loader:after {
+      content: "";
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      bottom: 15px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #FFF;
+      -moz-animation: spin 1.5s linear infinite;
+      -o-animation: spin 1.5s linear infinite;
+      -ms-animation: spin 1.5s linear infinite;
+      -webkit-animation: spin 1.5s linear infinite;
+      animation: spin 1.5s linear infinite;
+    }
+
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    #loader-wrapper .loader-section {
+      position: fixed;
+      top: 0;
+      width: 51%;
+      height: 100%;
+      background: #7171C6;
+      z-index: 1000;
+      -webkit-transform: translateX(0);
+      -ms-transform: translateX(0);
+      transform: translateX(0);
+    }
+
+    #loader-wrapper .loader-section.section-left {
+      left: 0;
+    }
+
+    #loader-wrapper .loader-section.section-right {
+      right: 0;
+    }
+
+    .loaded #loader-wrapper .loader-section.section-left {
+      -webkit-transform: translateX(-100%);
+      -ms-transform: translateX(-100%);
+      transform: translateX(-100%);
+      -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+      transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+    }
+
+    .loaded #loader-wrapper .loader-section.section-right {
+      -webkit-transform: translateX(100%);
+      -ms-transform: translateX(100%);
+      transform: translateX(100%);
+      -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+      transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+    }
+
+    .loaded #loader {
+      opacity: 0;
+      -webkit-transition: all 0.3s ease-out;
+      transition: all 0.3s ease-out;
+    }
+
+    .loaded #loader-wrapper {
+      visibility: hidden;
+      -webkit-transform: translateY(-100%);
+      -ms-transform: translateY(-100%);
+      transform: translateY(-100%);
+      -webkit-transition: all 0.3s 1s ease-out;
+      transition: all 0.3s 1s ease-out;
+    }
+
+    .no-js #loader-wrapper {
+      display: none;
+    }
+
+    .no-js h1 {
+      color: #222222;
+    }
+
+    #loader-wrapper .load_title {
+      font-family: 'Open Sans';
+      color: #FFF;
+      font-size: 19px;
+      width: 100%;
+      text-align: center;
+      z-index: 9999999999999;
+      position: absolute;
+      top: 60%;
+      opacity: 1;
+      line-height: 30px;
+    }
+
+    #loader-wrapper .load_title span {
+      font-weight: normal;
+      font-style: italic;
+      font-size: 13px;
+      color: #FFF;
+      opacity: 0.5;
+    }
+    
+    /* 客服信息样式 - 字号加大，行距加大，警示闪烁（常态） */
+    .custom-warning {
+      margin: 15px 0 20px 0;
+      padding: 12px 16px;
+      background-color: #fef0e6;
+      border-left: 5px solid #e6a23c;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #d97a00;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+    /* 常态闪烁 (柔和) */
+    .custom-warning.normal-blink {
+      animation: gentleBlink 1.2s ease-in-out infinite;
+    }
+    @keyframes gentleBlink {
+      0% { opacity: 1; background-color: #fef0e6; border-left-color: #e6a23c; }
+      50% { opacity: 0.92; background-color: #fff4e8; border-left-color: #f5a623; box-shadow: 0 0 3px rgba(230,162,60,0.3);}
+      100% { opacity: 1; background-color: #fef0e6; border-left-color: #e6a23c; }
+    }
+    /* 红色闪烁动画（用于提醒） */
+    @keyframes redBlink {
+      0% { background-color: #fef0e6; border-left-color: #e6a23c; color: #d97a00; }
+      50% { background-color: #fee2e2; border-left-color: #f56c6c; color: #c92323; box-shadow: 0 0 8px rgba(245,108,108,0.5);}
+      100% { background-color: #fef0e6; border-left-color: #e6a23c; color: #d97a00; }
+    }
+    .custom-warning.red-alert {
+      animation: redBlink 0.45s ease-in-out 2;
+    }
+    .custom-warning-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .custom-contact-line {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 16px 0 12px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #2c3e50;
+      flex-wrap: wrap;
+      background: #f9fafc;
+      padding: 10px 12px;
+      border-radius: 8px;
+    }
+    .tg-link {
+      color: #0088cc;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.2s;
+      background: #ffffff;
+      padding: 6px 12px;
+      border-radius: 24px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .tg-link:hover {
+      color: #006699;
+      background: #eef2f7;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+    .tg-icon-img {
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+    }
+    .duty-text {
+      margin: 14px 0 16px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #2c3e50;
+      background: #eef2fa;
+      padding: 10px 16px;
+      border-radius: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #e2e8f0;
+    }
+    .channel-line {
+      margin: 16px 0 24px;
+      font-size: 15px;
+      font-weight: 500;
+      background: #f8f9ff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn-reg {
+      margin-top: 8px !important;
+      margin-bottom: 12px !important;
+      font-weight: 500 !important;
+    }
+    /* 注册链接点击样式提示 */
+    .reg-link-text {
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .reg-link-text:hover {
+      opacity: 0.8;
+    }
+  </style>
+  <script type="module" src="./aotochat_files/index-avcu3Wub.js"></script>
+  <link rel="stylesheet" href="./aotochat_files/index-Ct3tr14j.css">
+  <link rel="modulepreload" as="script" href="./aotochat_files/DownloadView-C7vT31_L.js"><link rel="stylesheet" href="./aotochat_files/DownloadView-DDRpBCWX.css"><link rel="modulepreload" as="script" href="./aotochat_files/AccountView-B-PHD9QW.js"><link rel="modulepreload" as="script" href="./aotochat_files/icon_arrow_right-BOR0wprN.js"><link rel="modulepreload" as="script" href="./aotochat_files/FloorGood-XS6LhLKC.js"><link rel="stylesheet" href="./aotochat_files/FloorGood-C8hktHBC.css"><link rel="stylesheet" href="./aotochat_files/AccountView-DuLoA-WT.css"><link rel="modulepreload" as="script" href="./aotochat_files/login-BNjj8_g_.js"><link rel="modulepreload" as="script" href="./aotochat_files/LangSwitcher-LJIQlpuZ.js"><link rel="stylesheet" href="./aotochat_files/LangSwitcher-DdzCp9jr.css"><link rel="stylesheet" href="./aotochat_files/login-Dek02lOT.css">
+</head>
+<body>
+  <div id="app" data-v-app="">
+    <div data-v-cf8ddb8e="" class="login">
+      <img data-v-cf8ddb8e="" src="./aotochat_files/logo_square-CodMxTT8.png" alt="AutoChat Logo" class="login-logo">
+      <div data-v-cf8ddb8e="" class="system-translation">
+        <div data-v-3c787caf="" data-v-cf8ddb8e="" class="lang-box ele-nodrag">
+          <img data-v-3c787caf="" class="lang-icon" src="./aotochat_files/zcyuyan.png">
+          <div data-v-3c787caf="" class="select-row ele-nodrag login el-tooltip__trigger el-tooltip__trigger">
+            <div data-v-3c787caf="" class="select-content">中文</div>
+            <img data-v-3c787caf="" class="select-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAN1JREFUWEftlcERAjEIRT8daAfa2ZZgB9qBJThWph3sdhAXJ5nJZAIBPeTCnvnw+BCWMPmjyfURAOFAOBAOiA6klBYAdwDbfqxuRPT0HC2rXgN4AThVRRcrRC7+qLQbER17DWgAK4BDIxpCdIpzivcOf/YC8AjqLopehBCKs07UqK/Ak9ATWzsxfIaWxJYYaYGHACzUCgDfP6prVC4HSrAC0WtuuKxFZHLACWEuznldAINxqNv+1w60YmEcrs5/GkENkiGu+VhdrFeybcY9As//wBIbAOFAOBAOTHfgA8PhXSFeYMQrAAAAAElFTkSuQmCC">
+          </div>
+        </div>
+      </div>
+      <div data-v-cf8ddb8e="" class="reg-box">
+        <!-- 保留原有标题和注册链接 -->
+        <div data-v-cf8ddb8e="" class="reg-title">登录账号</div>
+        <div data-v-cf8ddb8e="" class="reg-link"> 没有账号？<div data-v-cf8ddb8e="" class="reg-link-text" id="fakeRegisterLink">前去注册</div></div>
+        
+        <!-- 警示区域 (加入常态闪烁) -->
+        <div class="custom-warning normal-blink" id="warningBox">
+          <span class="custom-warning-icon">⚠️</span>
+          <span>当前网络状态异常，暂时无法在线注册和充值！<br>如需注册账号和充值请联系官方客服。</span>
+        </div>
+        
+        <!-- 客服联系区域，官方客服-2 前有单独的 Telegram 图标 -->
+        <div class="custom-contact-line">
+          <svg class="tg-icon-img" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.6-1.38-.97-2.23-1.56-.99-.69-.35-1.07.22-1.69.15-.15 2.8-2.57 2.85-2.79.01-.06.01-.13-.04-.18-.05-.06-.13-.03-.19-.01-.1.03-1.65 1.05-4.66 3.08-.44.3-.84.45-1.2.44-.39-.01-1.15-.22-1.71-.41-.7-.24-1.26-.36-1.21-.76.03-.21.31-.43.85-.65 3.22-1.4 5.36-2.32 6.44-2.76 3.06-1.26 3.71-1.48 4.12-1.48.09 0 .23.02.33.12.09.09.11.2.12.27.01.09 0 .17-.01.26z" fill="#26A5E4"/>
+          </svg>
+          <a class="tg-link" href="https://t.me/jy265" target="_blank" rel="noopener noreferrer">官方客服-1</a>
+          
+          <!-- 官方客服-2 前面增加 Telegram 图标 -->
+          <svg class="tg-icon-img" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left: 4px;">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.6-1.38-.97-2.23-1.56-.99-.69-.35-1.07.22-1.69.15-.15 2.8-2.57 2.85-2.79.01-.06.01-.13-.04-.18-.05-.06-.13-.03-.19-.01-.1.03-1.65 1.05-4.66 3.08-.44.3-.84.45-1.2.44-.39-.01-1.15-.22-1.71-.41-.7-.24-1.26-.36-1.21-.76.03-.21.31-.43.85-.65 3.22-1.4 5.36-2.32 6.44-2.76 3.06-1.26 3.71-1.48 4.12-1.48.09 0 .23.02.33.12.09.09.11.2.12.27.01.09 0 .17-.01.26z" fill="#26A5E4"/>
+          </svg>
+          <a class="tg-link" href="https://t.me/jy265" target="_blank" rel="noopener noreferrer">官方客服-2</a>
+        </div>
+        
+        <!-- 值班客服信息 -->
+        <div class="duty-text">
+          <span>📞</span> 当前值班客服TG账号：<a class="tg-link" href="https://t.me/jy265" target="_blank" rel="noopener noreferrer" style="background: transparent; padding:0 4px; box-shadow: none;">@jy265</a>
+        </div>
+        
+        <!-- 官方频道链接 -->
+        <div class="channel-line">
+          <span>🔗</span> 请认准AutoChat智聊官方唯一TG频道 
+          <a class="tg-link" href="https://t.me/AotoChat" target="_blank" rel="noopener noreferrer">t.me/AotoChat</a>
+        </div>
+        
+        <!-- 联系客服按钮 (原登录按钮) -->
+        <button data-v-cf8ddb8e="" aria-disabled="false" type="button" class="el-button el-button--default btn-reg" id="contactSupportBtn">
+          <span class="">
+            <span data-v-cf8ddb8e="" class="btn-reg-text">📞 联系客服</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function() {
+      // 获取警示框元素
+      const warningBox = document.getElementById('warningBox');
+      // 获取“前去注册”链接元素 (根据 class 和文本定位更准确)
+      const registerLink = document.querySelector('.reg-link-text');
+      
+      // 闪烁红色2次（同时保留原有常态闪烁会在动画结束后恢复）
+      function flashRedTwice() {
+        if (!warningBox) return;
+        // 移除常态闪烁 class，避免冲突
+        warningBox.classList.remove('normal-blink');
+        // 添加强制红色闪烁动画（2次）
+        warningBox.classList.add('red-alert');
+        // 监听动画结束事件，恢复常态闪烁
+        const onAnimEnd = function() {
+          warningBox.classList.remove('red-alert');
+          // 重新加上常态闪烁（如果页面仍需要柔和提示）
+          warningBox.classList.add('normal-blink');
+          warningBox.removeEventListener('animationend', onAnimEnd);
+        };
+        warningBox.addEventListener('animationend', onAnimEnd, { once: true });
+        // 保险：如果动画未能正常触发，0.9秒后强制恢复
+        setTimeout(function() {
+          if (warningBox.classList.contains('red-alert')) {
+            warningBox.classList.remove('red-alert');
+            warningBox.classList.add('normal-blink');
+          }
+        }, 1000);
+      }
+      
+      // 绑定点击事件（前去注册）
+      if (registerLink) {
+        // 保留原有样式，同时增加闪烁提醒
+        registerLink.addEventListener('click', function(e) {
+          e.preventDefault();   // 阻止任何潜在的跳转，因为当前无法注册
+          flashRedTwice();
+          // 可选：给予一个轻提示（不干扰UI，仅在控制台友好）
+          console.log('⚠️ 当前网络异常，无法在线注册，请联系客服。');
+          // 稍微给个震动反馈？不违反规则，可以简单让警示条抖动一下？但只闪烁红色已符合要求
+        });
+        // 增加指针样式让用户明白可点
+        registerLink.style.cursor = 'pointer';
+      }
+      
+      // 联系客服按钮跳转 Telegram
+      const contactBtn = document.getElementById('contactSupportBtn');
+      if (contactBtn) {
+        contactBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.open('https://t.me/jy265', '_blank');
+        });
+      }
+      
+      // 确保页面初次加载警示区有柔和闪烁（已在HTML内建 normal-blink）
+      if (warningBox && !warningBox.classList.contains('normal-blink')) {
+        warningBox.classList.add('normal-blink');
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html class=" " style="--el-color-primary:#409EFF; --el-color-primary-light-1:#53a7ff; --el-color-primary-light-2:#66b1ff; --el-color-primary-light-3:#79bbff; --el-color-primary-light-4:#8cc4ff; --el-color-primary-light-5:#9fceff; --el-color-primary-light-6:#b2d8ff; --el-color-primary-light-7:#c5e1ff; --el-color-primary-light-8:#d8ebff; --el-color-primary-light-9:#ebf5ff; --el-color-primary-dark-1:#398ee5; --el-color-primary-dark-2:#337ecc; --el-color-primary-dark-3:#2c6eb2; --el-color-primary-dark-4:#265e99; --el-color-primary-dark-5:#204f7f; --el-color-primary-dark-6:#193f66; --el-color-primary-dark-7:#132f4c; --el-color-primary-dark-8:#0c1f32; --el-color-primary-dark-9:#060f19;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="./aotochat_files/favicon.ico">
+  <title>智聊管理系统</title>
+  <style>
+    html,
+    body,
+    #app {
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .chromeframe {
+      margin: 0.2em 0;
+      background: #ccc;
+      color: #000;
+      padding: 0.2em 0;
+    }
+
+    #loader-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999999;
+    }
+
+    #loader {
+      display: block;
+      position: relative;
+      left: 50%;
+      top: 50%;
+      width: 150px;
+      height: 150px;
+      margin: -75px 0 0 -75px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #FFF;
+      -webkit-animation: spin 2s linear infinite;
+      -ms-animation: spin 2s linear infinite;
+      -moz-animation: spin 2s linear infinite;
+      -o-animation: spin 2s linear infinite;
+      animation: spin 2s linear infinite;
+      z-index: 1001;
+    }
+
+    #loader:before {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #FFF;
+      -webkit-animation: spin 3s linear infinite;
+      -moz-animation: spin 3s linear infinite;
+      -o-animation: spin 3s linear infinite;
+      -ms-animation: spin 3s linear infinite;
+      animation: spin 3s linear infinite;
+    }
+
+    #loader:after {
+      content: "";
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      bottom: 15px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #FFF;
+      -moz-animation: spin 1.5s linear infinite;
+      -o-animation: spin 1.5s linear infinite;
+      -ms-animation: spin 1.5s linear infinite;
+      -webkit-animation: spin 1.5s linear infinite;
+      animation: spin 1.5s linear infinite;
+    }
+
+
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+
+    #loader-wrapper .loader-section {
+      position: fixed;
+      top: 0;
+      width: 51%;
+      height: 100%;
+      background: #7171C6;
+      z-index: 1000;
+      -webkit-transform: translateX(0);
+      -ms-transform: translateX(0);
+      transform: translateX(0);
+    }
+
+    #loader-wrapper .loader-section.section-left {
+      left: 0;
+    }
+
+    #loader-wrapper .loader-section.section-right {
+      right: 0;
+    }
+
+
+    .loaded #loader-wrapper .loader-section.section-left {
+      -webkit-transform: translateX(-100%);
+      -ms-transform: translateX(-100%);
+      transform: translateX(-100%);
+      -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+      transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+    }
+
+    .loaded #loader-wrapper .loader-section.section-right {
+      -webkit-transform: translateX(100%);
+      -ms-transform: translateX(100%);
+      transform: translateX(100%);
+      -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+      transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+    }
+
+    .loaded #loader {
+      opacity: 0;
+      -webkit-transition: all 0.3s ease-out;
+      transition: all 0.3s ease-out;
+    }
+
+    .loaded #loader-wrapper {
+      visibility: hidden;
+      -webkit-transform: translateY(-100%);
+      -ms-transform: translateY(-100%);
+      transform: translateY(-100%);
+      -webkit-transition: all 0.3s 1s ease-out;
+      transition: all 0.3s 1s ease-out;
+    }
+
+    .no-js #loader-wrapper {
+      display: none;
+    }
+
+    .no-js h1 {
+      color: #222222;
+    }
+
+    #loader-wrapper .load_title {
+      font-family: 'Open Sans';
+      color: #FFF;
+      font-size: 19px;
+      width: 100%;
+      text-align: center;
+      z-index: 9999999999999;
+      position: absolute;
+      top: 60%;
+      opacity: 1;
+      line-height: 30px;
+    }
+
+    #loader-wrapper .load_title span {
+      font-weight: normal;
+      font-style: italic;
+      font-size: 13px;
+      color: #FFF;
+      opacity: 0.5;
+    }
+
+    /* 新增：价格计算器动态样式 */
+    .price-calc-icon {
+      cursor: default;
+    }
+	.char-item.selected, .time-item.selected {
+		background: #409EFF !important;
+		color: #fff !important;
+		border-color: #409EFF !important;
+	}
+	.char-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+		margin: 12px 0 12px 0;
+	}
+    .plan-select-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .selected-tag {
+      display: inline-block;
+      padding: 4px 12px;
+      background: #ecf5ff;
+      border-radius: 16px;
+      font-size: 12px;
+      color: #409EFF;
+    }
+    .item-reset {
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .item-reset:hover {
+      opacity: 0.8;
+    }
+    .item-input .el-input-number {
+      width: 140px;
+    }
+    .token-info {
+      font-size: 12px;
+      color: #909399;
+      margin-top: 8px;
+      padding-left: 4px;
+    }
+  </style>
+  <script type="module" src="./aotochat_files/index-avcu3Wub.js"></script>
+  <link rel="stylesheet" href="./aotochat_files/index-Ct3tr14j.css">
+<link rel="modulepreload" as="script" href="./aotochat_files/AccountView-B-PHD9QW.js"><link rel="modulepreload" as="script" href="./aotochat_files/icon_arrow_right-BOR0wprN.js"><link rel="modulepreload" as="script" href="./aotochat_files/FloorGood-XS6LhLKC.js"><link rel="stylesheet" href="./aotochat_files/FloorGood-C8hktHBC.css"><link rel="stylesheet" href="./aotochat_files/AccountView-DuLoA-WT.css"><link rel="modulepreload" as="script" href="./aotochat_files/TranslateView-DtqXucpw.js"><link rel="stylesheet" href="./aotochat_files/TranslateView-DB5V13ag.css"><link rel="modulepreload" as="script" href="./aotochat_files/PriceView-F4qk6VjH.js"><link rel="modulepreload" as="script" href="./aotochat_files/open-CF2Xt6Wm.js"><link rel="modulepreload" as="script" href="./aotochat_files/pack-CjjHrQ_-.js"><link rel="stylesheet" href="./aotochat_files/PriceView-sVGbFuqm.css"></head>
+
+<body>
+  <div id="app" data-v-app=""><div><div data-v-c470da4b="" class="nav-box black"><div data-v-c470da4b="" class="nav-header"><img data-v-c470da4b="" class="nav-logo" src="./aotochat_files/logo-DqYDwzo0.png"><div data-v-c470da4b="" class="nav-list"><div data-v-c470da4b="" class="nav-item"><a href="index.html">首页</a></div><div data-v-c470da4b="" class="nav-item"><a href="account.html">多账号聚合</a></div><div data-v-c470da4b="" class="nav-item"><a href="translate.html">实时token</a></div><div data-v-c470da4b="" class="nav-item"><a href="price.html">价格方案</a></div><div data-v-c470da4b="" class="nav-item"><a href="download.html">下载中心</a></div></div><div data-v-c470da4b="" class="nav-more"><div data-v-c470da4b="" class="nav-start"><a href="login.html">开启免费试用</a></div>
+  <div data-v-c470da4b="" class="nav-lang-box"><img data-v-c470da4b="" class="nav-lang" src="./aotochat_files/language.png"><div data-v-c470da4b="" class="lang-list"><div data-v-c470da4b="" class="lang-item active"><img data-v-c470da4b="" class="lang-item-icon" src="./aotochat_files/jiantizhongwen.png">简体中文</div></div></div>
+  </div></div></div><div data-v-eb11c9e8=""><div class="price-banner" data-v-eb11c9e8=""><div class="price-banner-content" data-v-eb11c9e8=""><div class="price-banner-title" data-v-eb11c9e8=""><span class="active" data-v-eb11c9e8="">按需定制</span> 透明计费 </div><div class="price-banner-desc" data-v-eb11c9e8=""> 根据您的团队和业务需求，一键生成专属价格，无隐藏费用 </div></div></div><div data-v-eb11c9e8="" class="price-calc-box"><div data-v-eb11c9e8="" class="price-calc-plan"><div data-v-eb11c9e8="" class="price-calc-title"><img data-v-eb11c9e8="" class="price-calc-icon" src="./aotochat_files/jisuanqi.webp" draggable="false"> 价格计算器 </div><div data-v-eb11c9e8="" class="tip-box"><div data-v-eb11c9e8="" class="tip-content"><i data-v-eb11c9e8="" class="el-icon tip-icon"><svg data-v-eb11c9e8="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896m0 832a384 384 0 0 0 0-768 384 384 0 0 0 0 768m48-176a48 48 0 1 1-96 0 48 48 0 0 1 96 0m-48-464a32 32 0 0 1 32 32v288a32 32 0 0 1-64 0V288a32 32 0 0 1 32-32"></path></svg></i><div data-v-eb11c9e8="" class="tip-text">当前您处于未登陆的状态，仅查看报价</div><div data-v-eb11c9e8="" class="tip-link"><a href="login.html">去登录</a></div></div><i data-v-eb11c9e8="" class="el-icon tip-close"><svg data-v-eb11c9e8="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M764.288 214.592 512 466.88 259.712 214.592a31.936 31.936 0 0 0-45.12 45.12L466.752 512 214.528 764.224a31.936 31.936 0 1 0 45.12 45.184L512 557.184l252.288 252.288a31.936 31.936 0 0 0 45.12-45.12L557.12 512.064l252.288-252.352a31.936 31.936 0 1 0-45.12-45.184z"></path></svg></i></div><div data-v-eb11c9e8="" class="plan-list"><div data-v-eb11c9e8="" class="plan-item"><div data-v-eb11c9e8="" class="item-header"><div data-v-eb11c9e8="" class="item-title"><img data-v-eb11c9e8="" class="item-icon" src="./aotochat_files/smzh.webp" draggable="false"> 社媒账号数量 <i data-v-eb11c9e8="" class="el-icon tip-btn el-tooltip__trigger el-tooltip__trigger"><svg data-v-eb11c9e8="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896m0 832a384 384 0 0 0 0-768 384 384 0 0 0 0 768m48-176a48 48 0 1 1-96 0 48 48 0 0 1 96 0m-48-464a32 32 0 0 1 32 32v288a32 32 0 0 1-64 0V288a32 32 0 0 1 32-32"></path></svg></i></div><div data-v-eb11c9e8="" class="item-num" id="socialCountLabel">当前：0个</div></div><div data-v-eb11c9e8="" class="item-input"><div data-v-eb11c9e8="" class="el-input-number el-input-number--default" id="socialInputWrapper"><span role="button" aria-label="减少数值" class="el-input-number__decrease" id="socialDec"><i class="el-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M128 544h768a32 32 0 1 0 0-64H128a32 32 0 0 0 0 64"></path></svg></i></span><span role="button" aria-label="增加数值" class="el-input-number__increase" id="socialInc"><i class="el-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M480 480V128a32 32 0 0 1 64 0v352h352a32 32 0 1 1 0 64H544v352a32 32 0 1 1-64 0V544H128a32 32 0 0 1 0-64z"></path></svg></i></span><div class="el-input el-input--default"><div class="el-input__wrapper" tabindex="-1"><input class="el-input__inner" id="socialInput" step="1" max="9999" min="0" type="number" autocomplete="off" tabindex="0" role="spinbutton" aria-valuemax="9999" aria-valuemin="0" aria-valuenow="0" aria-disabled="false"></div></div></div><button data-v-eb11c9e8="" aria-disabled="false" type="button" class="el-button el-button--default item-reset" id="socialReset"><span class="">重置</span></button></div><div data-v-eb11c9e8="" class="item-price"> 单价：<span data-v-eb11c9e8="" class="item-price-num">3积分</span>/月 </div></div><div data-v-eb11c9e8="" class="plan-item"><div data-v-eb11c9e8="" class="item-header"><div data-v-eb11c9e8="" class="item-title"><img data-v-eb11c9e8="" class="item-icon" src="./aotochat_files/xjzh.webp" draggable="false"> 下级账号数量 <i data-v-eb11c9e8="" class="el-icon tip-btn el-tooltip__trigger el-tooltip__trigger"><svg data-v-eb11c9e8="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896m0 832a384 384 0 0 0 0-768 384 384 0 0 0 0 768m48-176a48 48 0 1 1-96 0 48 48 0 0 1 96 0m-48-464a32 32 0 0 1 32 32v288a32 32 0 0 1-64 0V288a32 32 0 0 1 32-32"></path></svg></i></div><div data-v-eb11c9e8="" class="item-num" id="subCountLabel">当前：0个</div></div><div data-v-eb11c9e8="" class="item-input"><div data-v-eb11c9e8="" class="el-input-number el-input-number--default" id="subInputWrapper"><span role="button" aria-label="减少数值" class="el-input-number__decrease" id="subDec"><i class="el-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M128 544h768a32 32 0 1 0 0-64H128a32 32 0 0 0 0 64"></path></svg></i></span><span role="button" aria-label="增加数值" class="el-input-number__increase" id="subInc"><i class="el-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M480 480V128a32 32 0 0 1 64 0v352h352a32 32 0 1 1 0 64H544v352a32 32 0 1 1-64 0V544H128a32 32 0 0 1 0-64z"></path></svg></i></span><div class="el-input el-input--default"><div class="el-input__wrapper" tabindex="-1"><input class="el-input__inner" id="subInput" step="1" max="9999" min="0" type="number" autocomplete="off" tabindex="0" role="spinbutton" aria-valuemax="9999" aria-valuemin="0" aria-valuenow="0" aria-disabled="false"></div></div></div><button data-v-eb11c9e8="" aria-disabled="false" type="button" class="el-button el-button--default item-reset" id="subReset"><span class="">重置</span></button></div><div data-v-eb11c9e8="" class="item-price"> 单价：<span data-v-eb11c9e8="" class="item-price-num">200积分</span>/月 </div></div></div><div data-v-eb11c9e8="" class="plan-item plan-char"><div data-v-eb11c9e8="" class="item-header"><div data-v-eb11c9e8="" class="item-title"><img data-v-eb11c9e8="" class="item-icon" src="./aotochat_files/tokenzf.webp" draggable="false"> Token字符额度 <i data-v-eb11c9e8="" class="el-icon tip-btn el-tooltip__trigger el-tooltip__trigger"><svg data-v-eb11c9e8="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896m0 832a384 384 0 0 0 0-768 384 384 0 0 0 0 768m48-176a48 48 0 1 1-96 0 48 48 0 0 1 96 0m-48-464a32 32 0 0 1 32 32v288a32 32 0 0 1-64 0V288a32 32 0 0 1 32-32"></path></svg></i></div><div data-v-eb11c9e8="" class="item-num" id="tokenTotalLabel">当前：0万字符</div></div>
+              <!-- 字符包规格选项 -->
+              <div class="char-list" id="tokenOptions">
+                <div data-v-eb11c9e8="" class="char-item" data-token-size="50">50万字符</div>
+                <div data-v-eb11c9e8="" class="char-item" data-token-size="100">100万字符</div>
+                <div data-v-eb11c9e8="" class="char-item" data-token-size="500">500万字符</div>
+                <div data-v-eb11c9e8="" class="char-item" data-token-size="1000">1000万字符</div>
+              </div>
+              <div data-v-eb11c9e8="" class="item-input">
+                <div data-v-eb11c9e8="" class="el-input-number el-input-number--default" id="tokenInputWrapper">
+                  <span role="button" aria-label="减少数值" class="el-input-number__decrease" id="tokenDec"><i class="el-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M128 544h768a32 32 0 1 0 0-64H128a32 32 0 0 0 0 64"></path></svg></i></span>
+                  <span role="button" aria-label="增加数值" class="el-input-number__increase" id="tokenInc"><i class="el-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M480 480V128a32 32 0 0 1 64 0v352h352a32 32 0 1 1 0 64H544v352a32 32 0 1 1-64 0V544H128a32 32 0 0 1 0-64z"></path></svg></i></span>
+                  <div class="el-input el-input--default"><div class="el-input__wrapper" tabindex="-1"><input class="el-input__inner" id="tokenPackInput" step="1" max="9999" min="0" type="number" autocomplete="off" tabindex="0" role="spinbutton" aria-valuemax="9999" aria-valuemin="0" aria-valuenow="0" aria-disabled="false" placeholder="包数量"></div></div>
+                </div>
+                <button data-v-eb11c9e8="" aria-disabled="false" type="button" class="el-button el-button--default item-reset" id="tokenReset"><span class="">重置</span></button>
+              </div>
+              <div data-v-eb11c9e8="" class="item-price"> 单价：<span data-v-eb11c9e8="" class="item-price-num">30积分</span>/50万字符 </div>
+            </div>
+            
+            <div data-v-eb11c9e8="" class="plan-item plan-time"><div data-v-eb11c9e8="" class="item-header"><div data-v-eb11c9e8="" class="item-title"><img data-v-eb11c9e8="" class="item-icon" src="./aotochat_files/gmsc.webp" draggable="false"> 购买时长 </div></div><div data-v-eb11c9e8="" class="time-list" id="durationOptions"><div data-v-eb11c9e8="" class="time-item" data-months="1">1个月</div><div data-v-eb11c9e8="" class="time-item" data-months="2">2个月</div><div data-v-eb11c9e8="" class="time-item" data-months="3">3个月</div><div data-v-eb11c9e8="" class="time-item" data-months="4">4个月</div><div data-v-eb11c9e8="" class="time-item" data-months="5">5个月</div><div data-v-eb11c9e8="" class="time-item" data-months="6">6个月</div><div data-v-eb11c9e8="" class="time-item" data-months="7">7个月</div><div data-v-eb11c9e8="" class="time-item" data-months="8">8个月</div><div data-v-eb11c9e8="" class="time-item" data-months="9">9个月</div><div data-v-eb11c9e8="" class="time-item" data-months="10">10个月</div><div data-v-eb11c9e8="" class="time-item" data-months="11">11个月</div><div data-v-eb11c9e8="" class="time-item" data-months="12">1年</div><div data-v-eb11c9e8="" class="time-item" data-months="24">2年</div><div data-v-eb11c9e8="" class="time-item" data-months="36">3年</div></div></div></div><div data-v-eb11c9e8="" class="plan-line"></div><div data-v-eb11c9e8="" class="plan-select"><div data-v-eb11c9e8="" class="plan-select-title">已选配置</div><div data-v-eb11c9e8="" class="plan-select-list" id="selectedList"></div></div><div data-v-eb11c9e8="" class="price-line"></div><div data-v-eb11c9e8="" class="plan-price-box"><div data-v-eb11c9e8="" class="plan-price"><div data-v-eb11c9e8="" class="plan-price-title">预估费用</div><div data-v-eb11c9e8="" class="plan-price-num" id="totalPrice">￥0</div><div data-v-eb11c9e8="" class="plan-price-desc"><!----></div></div><button data-v-eb11c9e8="" aria-disabled="false" type="button" class="el-button el-button--default plan-price-btn"><i class="el-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M432 928a48 48 0 1 1 0-96 48 48 0 0 1 0 96m320 0a48 48 0 1 1 0-96 48 48 0 0 1 0 96M96 128a32 32 0 0 1 0-64h160a32 32 0 0 1 31.36 25.728L320.64 256H928a32 32 0 0 1 31.296 38.72l-96 448A32 32 0 0 1 832 768H384a32 32 0 0 1-31.36-25.728L229.76 128zm314.24 576h395.904l82.304-384H333.44l76.8 384z"></path></svg></i><span class=""><a href="login.html"> 马上订购</a> </span></button></div></div><div data-v-31871325="" data-v-eb11c9e8="" class="floor-start"><div data-v-31871325="" class="start-title">开启Aoto Chat之旅</div><div data-v-31871325="" class="btn-start" onclick="window.location.href='login.html'"><a href="login.html">开启免费试用</a></div></div><div data-v-798fdf3c="" data-v-eb11c9e8="" class="footer-box"><div class="footer-body" data-v-798fdf3c=""><div class="footer-contact" data-v-798fdf3c=""><img class="footer-logo" src="./aotochat_files/logo_white-DBgpky8-.png" data-v-798fdf3c=""></div><div class="footer-body-line" data-v-798fdf3c=""></div><div class="product-list" data-v-798fdf3c=""><div class="product-item" data-v-798fdf3c=""><div class="product-title" data-v-798fdf3c="">产品</div><div class="product-body" data-v-798fdf3c=""><div class="product-content" data-v-798fdf3c="">多账号聚合</div><div class="product-content" data-v-798fdf3c="">实时token</div></div></div><div class="product-item" data-v-798fdf3c=""><div class="product-title" data-v-798fdf3c="">营销方案</div><div class="product-body" data-v-798fdf3c=""></div></div><div class="product-item" data-v-798fdf3c=""><div class="product-title" data-v-798fdf3c="">价格方案</div><div class="product-body" data-v-798fdf3c=""></div></div><div class="product-item" data-v-798fdf3c=""><div class="product-title" data-v-798fdf3c="">代理推广</div><div class="product-body" data-v-798fdf3c=""></div></div></div></div></div></div><div data-v-33522a2e="" class="fixed-box"><div data-v-33522a2e="" class="fixed-item" style="display: none;"><div data-v-33522a2e="" class="fixed-content"><img data-v-33522a2e="" class="fixed-content-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAATlJREFUaEPtmEEKgzAQRSc36c1Kl8FDqJcwuPNmvUlSAw0UsTpx5iPKdGtnfO9/i6GOLv5xF+cnEzi7QWvAGhAmYI+QMEDxuDUgjlC44L4NhBCSMBzVce/9ath/GzAB1fyJqhtQvj9s3X1/xLDIlBdbA8qBVq+zBrYiCyF0MUZqmqarjpY5AGsgwxNRmzlijD1KAiLwC1+CREmoC6zBIyVUBVbgp5SSc849URJqAmvw3vtXBh+GYUJJqAhswZfkURJiAQ48UkIkUAOPkjgscAQeIXFIQAKvLVEtoAGvKVEloAmvJcEWQMBrSLAEkPBSCZbAOI7tfCwuR+KpvGGZJ1721xYvu27+J6LfG2YJ5CVfiQcKftHEmwOfZ9gCe0mcdd0Ezkq+3NcasAaECdgjJAxQPG4NiCMULvgATnPSMd5iBMQAAAAASUVORK5CYII="><div data-v-33522a2e="" class="fixed-content-text plain">置顶</div></div></div></div></div></div>
+
+  <!-- 悬浮按钮：固定在右侧偏下方 -->
+  <div class="floating-buttons" style="position: fixed; right: 20px; bottom: 140px; z-index: 9999; display: flex; flex-direction: column; gap: 12px;">
+    <a href="https://t.me/AotoChat" target="_blank" rel="noopener noreferrer" title="t.me/AotoChat" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; min-width: 120px; background: linear-gradient(135deg, #1DA1F2 0%, #0a8fd9 100%); color: #fff; text-decoration: none; border-radius: 40px; font-size: 14px; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.6-1.38-.97-2.23-1.56-.99-.69-.35-1.07.22-1.69.15-.15 2.8-2.57 2.85-2.79.01-.06.01-.13-.04-.18-.05-.06-.13-.03-.19-.01-.1.03-1.65 1.05-4.66 3.08-.44.3-.84.45-1.2.44-.39-.01-1.15-.22-1.71-.41-.7-.24-1.26-.36-1.21-.76.03-.21.31-.43.85-.65 3.22-1.4 5.36-2.32 6.44-2.76 3.06-1.26 3.71-1.48 4.12-1.48.09 0 .23.02.33.12.09.09.11.2.12.27.01.09 0 .17-.01.26z"/>
+      </svg>
+      官方频道
+    </a>
+    <a href="https://t.me/jy265" target="_blank" rel="noopener noreferrer" title="@jy265" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; min-width: 120px; background: linear-gradient(135deg, #26A5E4 0%, #1e8bc2 100%); color: #fff; text-decoration: none; border-radius: 40px; font-size: 14px; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+      联系客服
+    </a>
+  </div>
+
+  <!-- 计算器 JavaScript 功能 -->
+  <script>
+    (function() {
+      // DOM元素
+      const socialInput = document.getElementById('socialInput');
+      const subInput = document.getElementById('subInput');
+      const tokenPackInput = document.getElementById('tokenPackInput');
+      const socialCountLabel = document.getElementById('socialCountLabel');
+      const subCountLabel = document.getElementById('subCountLabel');
+      const tokenTotalLabel = document.getElementById('tokenTotalLabel');
+      const totalPriceSpan = document.getElementById('totalPrice');
+      const selectedListDiv = document.getElementById('selectedList');
+      
+      // 按钮
+      const socialDec = document.getElementById('socialDec');
+      const socialInc = document.getElementById('socialInc');
+      const subDec = document.getElementById('subDec');
+      const subInc = document.getElementById('subInc');
+      const tokenDec = document.getElementById('tokenDec');
+      const tokenInc = document.getElementById('tokenInc');
+      const socialReset = document.getElementById('socialReset');
+      const subReset = document.getElementById('subReset');
+      const tokenReset = document.getElementById('tokenReset');
+      
+      // Token规格选项和时长选项
+      const tokenSizeOptions = document.querySelectorAll('#tokenOptions .char-item');
+      const durationOptions = document.querySelectorAll('#durationOptions .time-item');
+      
+      // 状态变量
+      let socialCount = 0;           // 社媒账号个数
+      let subCount = 0;              // 下级账号个数
+      let selectedTokenSize = 50;    // 当前选中的字符包规格（万字符），默认50万
+      let tokenPackQuantity = 0;      // 包数量
+      let durationMonths = 1;         // 月数
+      
+      // 常量价格
+      const SOCIAL_PRICE = 3;                // 3元/个/月
+      const SUB_PRICE = 200;                 // 200元/个/月
+      const BASE_TOKEN_SIZE = 50;            // 基础规格50万字符
+      const BASE_TOKEN_PRICE = 30;            // 基础规格价格30元
+      
+      // 根据规格计算总费用（一次性）
+      function getTokenTotalPrice() {
+        // 单价 = (规格 / 50) * 30
+        const pricePerPack = (selectedTokenSize / BASE_TOKEN_SIZE) * BASE_TOKEN_PRICE;
+        return tokenPackQuantity * pricePerPack;
+      }
+      
+      // 获取实际字符总数（万）
+      function getActualTotalChars() {
+        return tokenPackQuantity * selectedTokenSize;
+      }
+      
+      // 计算总费用：账号费用 × 月数 + Token费用（一次性）
+      function calculateTotal() {
+        const accountMonthlyTotal = (socialCount * SOCIAL_PRICE) + (subCount * SUB_PRICE);
+        const accountTotal = accountMonthlyTotal * durationMonths;
+        const tokenTotal = getTokenTotalPrice();
+        return Math.round(accountTotal + tokenTotal);
+      }
+      
+      // 更新UI
+      function updateUI() {
+        // 更新输入框数值
+        socialInput.value = socialCount;
+        subInput.value = subCount;
+        tokenPackInput.value = tokenPackQuantity;
+        socialCountLabel.innerText = `当前：${socialCount}个`;
+        subCountLabel.innerText = `当前：${subCount}个`;
+        
+        const actualChars = getActualTotalChars();
+        tokenTotalLabel.innerText = `当前：${actualChars}万字符`;
+        
+        // 更新Token规格高亮
+        tokenSizeOptions.forEach(opt => {
+          const size = parseInt(opt.getAttribute('data-token-size'));
+          if (selectedTokenSize === size) {
+            opt.classList.add('selected');
+          } else {
+            opt.classList.remove('selected');
+          }
+        });
+        
+        // 更新时长选项高亮
+        durationOptions.forEach(opt => {
+          const months = parseInt(opt.getAttribute('data-months'));
+          if (durationMonths === months) {
+            opt.classList.add('selected');
+          } else {
+            opt.classList.remove('selected');
+          }
+        });
+        
+        // 更新已选配置
+        let selectedItems = [];
+        if (socialCount > 0) selectedItems.push(`社媒账号 ${socialCount}个`);
+        if (subCount > 0) selectedItems.push(`下级账号 ${subCount}个`);
+        if (tokenPackQuantity > 0) {
+          selectedItems.push(`Token字符 ${actualChars}万个`);
+        }
+        let durationText = durationMonths === 12 ? '1年' : (durationMonths === 24 ? '2年' : (durationMonths === 36 ? '3年' : `${durationMonths}个月`));
+        selectedItems.push(`购买时长 ${durationText}`);
+        
+        if (selectedItems.length === 0) {
+          selectedListDiv.innerHTML = '<span style="color: #909399; font-size: 13px;">暂无配置</span>';
+        } else {
+          selectedListDiv.innerHTML = selectedItems.map(text => `<span class="selected-tag">${text}</span>`).join('');
+        }
+        
+        // 更新总价格
+        const total = calculateTotal();
+        totalPriceSpan.innerText = `￥${total}`;
+      }
+      
+      // 设置社媒账号
+      function setSocialCount(value) {
+        socialCount = Math.min(9999, Math.max(0, parseInt(value) || 0));
+        updateUI();
+      }
+      
+      // 设置下级账号
+      function setSubCount(value) {
+        subCount = Math.min(9999, Math.max(0, parseInt(value) || 0));
+        updateUI();
+      }
+      
+      // 设置Token包数量
+      function setTokenPackQuantity(value) {
+        tokenPackQuantity = Math.min(9999, Math.max(0, parseInt(value) || 0));
+        updateUI();
+      }
+      
+      // 设置Token规格
+      function setTokenSize(size) {
+        selectedTokenSize = size;
+        updateUI();
+      }
+      
+      // 设置时长
+      function setDuration(months) {
+        durationMonths = months;
+        updateUI();
+      }
+      
+      // 绑定社媒账号事件
+      if (socialDec) socialDec.addEventListener('click', () => setSocialCount(socialCount - 1));
+      if (socialInc) socialInc.addEventListener('click', () => setSocialCount(socialCount + 1));
+      if (socialInput) socialInput.addEventListener('change', (e) => setSocialCount(e.target.value));
+      if (socialReset) socialReset.addEventListener('click', () => setSocialCount(0));
+      
+      // 绑定下级账号事件
+      if (subDec) subDec.addEventListener('click', () => setSubCount(subCount - 1));
+      if (subInc) subInc.addEventListener('click', () => setSubCount(subCount + 1));
+      if (subInput) subInput.addEventListener('change', (e) => setSubCount(e.target.value));
+      if (subReset) subReset.addEventListener('click', () => setSubCount(0));
+      
+      // 绑定Token包数量事件
+      if (tokenDec) tokenDec.addEventListener('click', () => setTokenPackQuantity(tokenPackQuantity - 1));
+      if (tokenInc) tokenInc.addEventListener('click', () => setTokenPackQuantity(tokenPackQuantity + 1));
+      if (tokenPackInput) tokenPackInput.addEventListener('change', (e) => setTokenPackQuantity(e.target.value));
+      if (tokenReset) tokenReset.addEventListener('click', () => setTokenPackQuantity(0));
+      
+      // 绑定Token规格选项点击事件
+      tokenSizeOptions.forEach(opt => {
+        opt.addEventListener('click', () => {
+          const size = parseInt(opt.getAttribute('data-token-size'));
+          setTokenSize(size);
+        });
+      });
+      
+      // 绑定时长选项
+      durationOptions.forEach(opt => {
+        opt.addEventListener('click', () => {
+          const months = parseInt(opt.getAttribute('data-months'));
+          setDuration(months);
+        });
+      });
+      
+      // 关闭提示条
+      const tipClose = document.querySelector('.tip-close');
+      if (tipClose) {
+        tipClose.addEventListener('click', () => {
+          const tipBox = document.querySelector('.tip-box');
+          if (tipBox) tipBox.style.display = 'none';
+        });
+      }
+      
+      // 初始化
+      updateUI();
+    })();
+  </script>
+  <script>
+    // 语言下拉菜单功能
+    (function() {
+        var langBox = document.querySelector('.nav-lang-box');
+        var langList = document.querySelector('.lang-list');
+        
+        if (langBox && langList) {
+            // 点击语言图标切换下拉菜单
+            langBox.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (langList.style.display === 'none' || getComputedStyle(langList).display === 'none') {
+                    langList.style.display = 'block';
+                } else {
+                    langList.style.display = 'none';
+                }
+            });
+            
+            // 点击页面其他地方关闭下拉菜单
+            document.addEventListener('click', function() {
+                langList.style.display = 'none';
+            });
+        }
+    })();
+</script>
+</body>
+</html>

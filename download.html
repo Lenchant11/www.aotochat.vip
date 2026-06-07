@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class=" " style="--el-color-primary:#409EFF; --el-color-primary-light-1:#53a7ff; --el-color-primary-light-2:#66b1ff; --el-color-primary-light-3:#79bbff; --el-color-primary-light-4:#8cc4ff; --el-color-primary-light-5:#9fceff; --el-color-primary-light-6:#b2d8ff; --el-color-primary-light-7:#c5e1ff; --el-color-primary-light-8:#d8ebff; --el-color-primary-light-9:#ebf5ff; --el-color-primary-dark-1:#398ee5; --el-color-primary-dark-2:#337ecc; --el-color-primary-dark-3:#2c6eb2; --el-color-primary-dark-4:#265e99; --el-color-primary-dark-5:#204f7f; --el-color-primary-dark-6:#193f66; --el-color-primary-dark-7:#132f4c; --el-color-primary-dark-8:#0c1f32; --el-color-primary-dark-9:#060f19;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="./aotochat_files/favicon.ico">
+  <title>智聊管理系统</title>
+  <style>
+    html,
+    body,
+    #app {
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .chromeframe {
+      margin: 0.2em 0;
+      background: #ccc;
+      color: #000;
+      padding: 0.2em 0;
+    }
+
+    #loader-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999999;
+    }
+
+    #loader {
+      display: block;
+      position: relative;
+      left: 50%;
+      top: 50%;
+      width: 150px;
+      height: 150px;
+      margin: -75px 0 0 -75px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #FFF;
+      -webkit-animation: spin 2s linear infinite;
+      -ms-animation: spin 2s linear infinite;
+      -moz-animation: spin 2s linear infinite;
+      -o-animation: spin 2s linear infinite;
+      animation: spin 2s linear infinite;
+      z-index: 1001;
+    }
+
+    #loader:before {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #FFF;
+      -webkit-animation: spin 3s linear infinite;
+      -moz-animation: spin 3s linear infinite;
+      -o-animation: spin 3s linear infinite;
+      -ms-animation: spin 3s linear infinite;
+      animation: spin 3s linear infinite;
+    }
+
+    #loader:after {
+      content: "";
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      bottom: 15px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #FFF;
+      -moz-animation: spin 1.5s linear infinite;
+      -o-animation: spin 1.5s linear infinite;
+      -ms-animation: spin 1.5s linear infinite;
+      -webkit-animation: spin 1.5s linear infinite;
+      animation: spin 1.5s linear infinite;
+    }
+
+
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+
+    #loader-wrapper .loader-section {
+      position: fixed;
+      top: 0;
+      width: 51%;
+      height: 100%;
+      background: #7171C6;
+      z-index: 1000;
+      -webkit-transform: translateX(0);
+      -ms-transform: translateX(0);
+      transform: translateX(0);
+    }
+
+    #loader-wrapper .loader-section.section-left {
+      left: 0;
+    }
+
+    #loader-wrapper .loader-section.section-right {
+      right: 0;
+    }
+
+
+    .loaded #loader-wrapper .loader-section.section-left {
+      -webkit-transform: translateX(-100%);
+      -ms-transform: translateX(-100%);
+      transform: translateX(-100%);
+      -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+      transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+    }
+
+    .loaded #loader-wrapper .loader-section.section-right {
+      -webkit-transform: translateX(100%);
+      -ms-transform: translateX(100%);
+      transform: translateX(100%);
+      -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+      transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+    }
+
+    .loaded #loader {
+      opacity: 0;
+      -webkit-transition: all 0.3s ease-out;
+      transition: all 0.3s ease-out;
+    }
+
+    .loaded #loader-wrapper {
+      visibility: hidden;
+      -webkit-transform: translateY(-100%);
+      -ms-transform: translateY(-100%);
+      transform: translateY(-100%);
+      -webkit-transition: all 0.3s 1s ease-out;
+      transition: all 0.3s 1s ease-out;
+    }
+
+    .no-js #loader-wrapper {
+      display: none;
+    }
+
+    .no-js h1 {
+      color: #222222;
+    }
+
+    #loader-wrapper .load_title {
+      font-family: 'Open Sans';
+      color: #FFF;
+      font-size: 19px;
+      width: 100%;
+      text-align: center;
+      z-index: 9999999999999;
+      position: absolute;
+      top: 60%;
+      opacity: 1;
+      line-height: 30px;
+    }
+
+    #loader-wrapper .load_title span {
+      font-weight: normal;
+      font-style: italic;
+      font-size: 13px;
+      color: #FFF;
+      opacity: 0.5;
+    }
+  </style>
+  <script>
+function downloadFile() {
+  const link = document.createElement('a');
+  link.href = 'https://tk-tools-cc.oss-cn-hongkong.aliyuncs.com/aotochat/exe/aotochat-2.1.4-setup.exe';
+  link.download = 'aotochat-2.1.4-setup.exe'; // 设置下载文件名
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+</script>
+  <script type="module" src="./aotochat_files/index-avcu3Wub.js"></script>
+  <link rel="stylesheet" href="./aotochat_files/index-Ct3tr14j.css">
+<link rel="modulepreload" as="script" href="./aotochat_files/AccountView-B-PHD9QW.js"><link rel="modulepreload" as="script" href="./aotochat_files/icon_arrow_right-BOR0wprN.js"><link rel="modulepreload" as="script" href="./aotochat_files/FloorGood-XS6LhLKC.js"><link rel="stylesheet" href="./aotochat_files/FloorGood-C8hktHBC.css"><link rel="stylesheet" href="./aotochat_files/AccountView-DuLoA-WT.css"><link rel="modulepreload" as="script" href="./aotochat_files/TranslateView-DtqXucpw.js"><link rel="stylesheet" href="./aotochat_files/TranslateView-DB5V13ag.css"><link rel="modulepreload" as="script" href="./aotochat_files/PriceView-F4qk6VjH.js"><link rel="modulepreload" as="script" href="./aotochat_files/open-CF2Xt6Wm.js"><link rel="modulepreload" as="script" href="./aotochat_files/pack-CjjHrQ_-.js"><link rel="stylesheet" href="./aotochat_files/PriceView-sVGbFuqm.css"><link rel="modulepreload" as="script" href="./aotochat_files/DownloadView-C7vT31_L.js"><link rel="stylesheet" href="./aotochat_files/DownloadView-DDRpBCWX.css"></head>
+
+<body>
+  <div id="app" data-v-app=""><div><div data-v-c470da4b="" class="nav-box black"><div data-v-c470da4b="" class="nav-header"><img data-v-c470da4b="" class="nav-logo" src="./aotochat_files/logo-DqYDwzo0.png"><div data-v-c470da4b="" class="nav-list"><div data-v-c470da4b="" class="nav-item"><a href="index.html">首页</a></div><div data-v-c470da4b="" class="nav-item"><a href="account.html">多账号聚合</a></div><div data-v-c470da4b="" class="nav-item"><a href="translate.html">实时token</a></div><div data-v-c470da4b="" class="nav-item"><a href="price.html">价格方案</a></div><div data-v-c470da4b="" class="nav-item"><a href="download.html">下载中心</a></div></div><div data-v-c470da4b="" class="nav-more"><div data-v-c470da4b="" class="nav-start"><a href="login.html">开启免费试用</a></div>
+  <div data-v-c470da4b="" class="nav-lang-box"><img data-v-c470da4b="" class="nav-lang" src="./aotochat_files/language.png"><div data-v-c470da4b="" class="lang-list"><div data-v-c470da4b="" class="lang-item active"><img data-v-c470da4b="" class="lang-item-icon" src="./aotochat_files/jiantizhongwen.png">简体中文</div></div></div>
+  </div></div></div><div data-v-0c1f6ae9="" class="download-box"><div data-v-0c1f6ae9="" class="download-banner"><img data-v-0c1f6ae9="" class="download-banner-icon" src="./aotochat_files/download_app-9lwuzZnD.png"><div data-v-0c1f6ae9="" class="download-banner-title">AotoChat下载中心</div><div data-v-0c1f6ae9="" class="download-banner-desc">支持ios全参导入，下载完成后，使用下级账号登录开启AotoChat之旅！</div><div data-v-0c1f6ae9="" class="download-btn" onclick="downloadFile()"><img data-v-0c1f6ae9="" class="download-btn-icon" src="./aotochat_files/windows.png"><div data-v-0c1f6ae9="" class="download-btn-text">下载桌面版</div></div><div class="download-banner-list" data-v-0c1f6ae9=""><div class="download-banner-item" data-v-0c1f6ae9=""><img class="download-banner-item-icon" src="./aotochat_files/xzkxjy.png" data-v-0c1f6ae9=""><div class="download-banner-item-title" data-v-0c1f6ae9="">开箱即用</div><div class="download-banner-item-desc" data-v-0c1f6ae9="">小白快速上手，简单易操作，轻松开启会话聊天</div></div><div class="download-banner-item" data-v-0c1f6ae9=""><img class="download-banner-item-icon" src="./aotochat_files/xzdzhjh.png" data-v-0c1f6ae9=""><div class="download-banner-item-title" data-v-0c1f6ae9="">实现多账号聚合</div><div class="download-banner-item-desc" data-v-0c1f6ae9="">集中展示各账号的聊天数据，避免频繁切换账号或设备导致消息回复不及时</div></div><div class="download-banner-item" data-v-0c1f6ae9=""><img class="download-banner-item-icon" src="./aotochat_files/xzxhj.png" data-v-0c1f6ae9=""><div class="download-banner-item-title" data-v-0c1f6ae9="">秒token，低延迟</div><div class="download-banner-item-desc" data-v-0c1f6ae9="">支持市面上90%的语言token，在线自动token在也不用担心沟通障碍问题</div></div></div></div><div class="download-step" data-v-0c1f6ae9=""><div class="download-step-title" data-v-0c1f6ae9="">3 个步骤，快速配置</div><div class="download-step-list" data-v-0c1f6ae9=""><div class="download-step-item" data-v-0c1f6ae9=""><img class="download-step-item-icon" src="./aotochat_files/download_step_1-CUsxE2ZU.png" data-v-0c1f6ae9=""><div class="download-step-item-title" data-v-0c1f6ae9=""><img class="download-step-item-num" src="./aotochat_files/xzbz1.png" data-v-0c1f6ae9=""><div class="download-step-item-text" data-v-0c1f6ae9="">注册账号</div></div><div class="download-step-item-desc" data-v-0c1f6ae9="">注册管理端账号，添加下级成员</div></div><div class="download-step-item" data-v-0c1f6ae9=""><img class="download-step-item-icon" src="./aotochat_files/download_step_2-CPBcWeyO.png" data-v-0c1f6ae9=""><div class="download-step-item-title" data-v-0c1f6ae9=""><img class="download-step-item-num" src="./aotochat_files/xzbz2.png" data-v-0c1f6ae9=""><div class="download-step-item-text" data-v-0c1f6ae9="">导入TK账号</div></div><div class="download-step-item-desc" data-v-0c1f6ae9="">登录客户端，批量导入TK账号支持ios参导入</div></div><div class="download-step-item" data-v-0c1f6ae9=""><img class="download-step-item-icon" src="./aotochat_files/download_step_3-D_tF1D1P.png" data-v-0c1f6ae9=""><div class="download-step-item-title" data-v-0c1f6ae9=""><img class="download-step-item-num" src="./aotochat_files/xzbz3.png" data-v-0c1f6ae9=""><div class="download-step-item-text" data-v-0c1f6ae9="">开启会话</div></div><div class="download-step-item-desc" data-v-0c1f6ae9="">接发消息快速响应，轻松实现多账号聊天</div></div></div></div><div data-v-798fdf3c="" data-v-0c1f6ae9="" class="footer-box"><div class="footer-body" data-v-798fdf3c=""><div class="footer-contact" data-v-798fdf3c=""><img class="footer-logo" src="./aotochat_files/logo_white-DBgpky8-.png" data-v-798fdf3c=""></div><div class="footer-body-line" data-v-798fdf3c=""></div><div class="product-list" data-v-798fdf3c=""><div class="product-item" data-v-798fdf3c=""><div class="product-title" data-v-798fdf3c="">产品</div><div class="product-body" data-v-798fdf3c=""><div class="product-content" data-v-798fdf3c="">多账号聚合</div><div class="product-content" data-v-798fdf3c="">实时token</div></div></div><div class="product-item" data-v-798fdf3c=""><div class="product-title" data-v-798fdf3c="">营销方案</div><div class="product-body" data-v-798fdf3c=""></div></div><div class="product-item" data-v-798fdf3c=""><div class="product-title" data-v-798fdf3c="">价格方案</div><div class="product-body" data-v-798fdf3c=""></div></div><div class="product-item" data-v-798fdf3c=""><div class="product-title" data-v-798fdf3c="">代理推广</div><div class="product-body" data-v-798fdf3c=""></div></div></div></div></div></div><div data-v-33522a2e="" class="fixed-box"><div data-v-33522a2e="" class="fixed-item" style="display: none;"><div data-v-33522a2e="" class="fixed-content"><img data-v-33522a2e="" class="fixed-content-icon" src="./aotochat_files/zhiding.png"><div data-v-33522a2e="" class="fixed-content-text plain">置顶</div></div></div></div></div></div>
+
+  <!-- 悬浮按钮：固定在右侧偏下方 -->
+  <div class="floating-buttons" style="position: fixed; right: 20px; bottom: 140px; z-index: 9999; display: flex; flex-direction: column; gap: 12px;">
+    
+    <!-- 按钮1：官方频道（带悬浮提示：t.me/AotoChat） -->
+    <a href="https://t.me/AotoChat" target="_blank" rel="noopener noreferrer" title="t.me/AotoChat" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; min-width: 120px; background: linear-gradient(135deg, #1DA1F2 0%, #0a8fd9 100%); color: #fff; text-decoration: none; border-radius: 40px; font-size: 14px; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.6-1.38-.97-2.23-1.56-.99-.69-.35-1.07.22-1.69.15-.15 2.8-2.57 2.85-2.79.01-.06.01-.13-.04-.18-.05-.06-.13-.03-.19-.01-.1.03-1.65 1.05-4.66 3.08-.44.3-.84.45-1.2.44-.39-.01-1.15-.22-1.71-.41-.7-.24-1.26-.36-1.21-.76.03-.21.31-.43.85-.65 3.22-1.4 5.36-2.32 6.44-2.76 3.06-1.26 3.71-1.48 4.12-1.48.09 0 .23.02.33.12.09.09.11.2.12.27.01.09 0 .17-.01.26z"/>
+      </svg>
+      官方频道
+    </a>
+    
+    <!-- 按钮2：联系客服（带悬浮提示：@jy265） -->
+    <a href="https://t.me/jy265" target="_blank" rel="noopener noreferrer" title="@jy265" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; min-width: 120px; background: linear-gradient(135deg, #26A5E4 0%, #1e8bc2 100%); color: #fff; text-decoration: none; border-radius: 40px; font-size: 14px; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+      联系客服
+    </a>
+    
+  </div>
+
+<div id="el-popper-container-3865"></div>
+<script>
+    // 语言下拉菜单功能
+    (function() {
+        var langBox = document.querySelector('.nav-lang-box');
+        var langList = document.querySelector('.lang-list');
+        
+        if (langBox && langList) {
+            // 点击语言图标切换下拉菜单
+            langBox.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (langList.style.display === 'none' || getComputedStyle(langList).display === 'none') {
+                    langList.style.display = 'block';
+                } else {
+                    langList.style.display = 'none';
+                }
+            });
+            
+            // 点击页面其他地方关闭下拉菜单
+            document.addEventListener('click', function() {
+                langList.style.display = 'none';
+            });
+        }
+    })();
+</script>
+</body></html>
