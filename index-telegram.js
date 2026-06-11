@@ -1,8 +1,8 @@
 // index-telegram.js
 
 (function() {
-  var GA_ID = 'AW-17812392789';
-  var CONVERSION_ID = 'AW-17812392789/VDRzCLKX0bocENWWzq1C';
+  var GA_ID = 'AW-18222439736';
+  var CONVERSION_ID = 'AW-18222439736/U351CNuWib0cELi6kfFD';
   
   var script = document.createElement('script');
   script.async = true;
